@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="style3.css">
+</head>
+<body>
+	<script>
+		var field = document.createElement("div");
+		field.className = 'field';
+		document.body.appendChild(field);
+		var map = [[0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+				   [0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0],
+				   [0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0],
+				   [0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0],
+				   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+				   [0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0],
+				   [0,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,0],
+				   [0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0],
+				   [1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,1,0,0,0,0,0,0,1,0,1,1,0,1,1,1,1,1],
+				   [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+				   [1,1,1,1,1,0,1,1,0,1,0,0,0,0,0,0,1,0,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1],
+				   [1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1],
+				   [0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0],
+				   [0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0],
+				   [0,1,1,1,1,0,1,1,1,1,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,0],
+				   [0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0],
+				   [1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1],
+				   [1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,0,1,1,0,1,1],
+				   [0,0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0,0,0,0],
+				   [0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0],
+				   [0,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1,1,1,1,0],
+				   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		]
+		var balls =[];
+		for(i=0;i<map.length;i++){
+			for(j=0;j<map.length;j++){
+				var cell = document.createElement("div");
+				var ball = document.createElement("div");
+				ball.className = 'ball';
+				if(map[i][j]==0){
+					cell.className = 'empty';
+					cell.appendChild(ball);
+					ball.style.display = "block";
+					balls.push(ball);
+				}
+				if(map[i][j]==1){
+					cell.className = 'wall';
+					balls.push('1');
+				}
+				field.appendChild(cell);
+			}
+		}			
+		balls[0].style.display = "none";
+		var pacman = document.createElement("div");
+		pacman.className = 'pacman';
+		field.appendChild(pacman);
+		var coordinat_y = 0;
+		var coordinat_x = 0;
+		var key=0;
+		var pacman_x=0;
+		var pacman_y=0;	
+		/*var imports=[];
+		for(i=0;i<balls.length;i++){
+			if(balls[i]!=1){
+				var imp = getComputedStyle(balls[i]);
+				imports.push(imp);
+			}
+			else{
+				imports.push(1);
+			}
+		}
+		console.log(getComputedStyle(ball));*/
+		var score=0;
+		function move(event){
+			if(event.keyCode=='38'){
+				if(key!=38){
+					pacman.style.transform = "rotate(270deg)";
+				}
+				coordinat_y = +pacman.style.top.replace("px","");
+				if(coordinat_y>0){
+					if(map[pacman_y-1][pacman_x]==0){
+						pacman.style.top=coordinat_y - 25 +"px";
+						pacman_y = pacman_y - 1;
+						if(balls[pacman_y*26+pacman_x].style.display == "block"){
+							balls[pacman_y*26+pacman_x].style.display = "none";
+							score=score+20;
+						}
+						
+					}
+				}
+			}
+			if(event.keyCode=='40'){
+				if(key!=40){
+					pacman.style.transform = "rotate(90deg)"
+				}
+				coordinat_y = +pacman.style.top.replace("px","");
+				if(coordinat_y<700){
+					if(map[pacman_y+1][pacman_x]==0){
+						pacman.style.top=coordinat_y + 25 +"px";
+						pacman_y = pacman_y + 1;
+						balls[pacman_y*26+pacman_x].style.display = "none";
+					}
+				}
+			}
+			if(event.keyCode=='37'){
+				if(key!=37){
+					pacman.style.transform = "rotate(180deg)"
+				}
+				coordinat_x = +pacman.style.left.replace("px","");
+				if(coordinat_x>0){
+					if(map[pacman_y][pacman_x-1]==0){
+						pacman.style.left=coordinat_x - 25 +"px";
+						pacman_x = pacman_x - 1;
+						balls[pacman_y*26+pacman_x].style.display = "none";
+						
+					}
+				}
+				if(coordinat_x==0 && pacman_y==13){
+					pacman.style.left="625px";
+					pacman_x = 25;
+					balls[pacman_y*26+pacman_x].style.display = "none";
+				}
+			}
+			if(event.keyCode=='39'){
+				if(key!=39){
+					pacman.style.transform = "rotate(360deg)"
+				}
+				coordinat_x = +pacman.style.left.replace("px","");
+				if(coordinat_x<625){
+					if(map[pacman_y][pacman_x+1]==0){
+						pacman.style.left=coordinat_x + 25 +"px";
+						pacman_x = pacman_x + 1;
+						balls[pacman_y*26+pacman_x].style.display = "none";
+					}
+				}
+				if(coordinat_x==625 && pacman_y==13){
+					pacman.style.left="0px";
+					pacman_x=0;
+					balls[pacman_y*26+pacman_x].style.display = "none";
+				}
+
+			}
+			key = event.keyCode;
+			/*console.log(score);
+			console.log(pacman_x);
+			console.log(pacman_y);*/
+			
+			console.log(score);
+		}
+		window.addEventListener('keydown',move,false);
+		var eating_flag = false;
+		function eating(){
+			if(!eating_flag){
+				pacman.style.borderRight = "12.5px solid #F4B915";
+				eating_flag = true;
+			}
+			else{
+				pacman.style.borderRight = "12.5px solid transparent";
+				eating_flag = false;
+			}
+		}
+		var eatingId = setInterval(eating,250);
+		var shadow = document.createElement("div");
+		shadow.className = 'shadow';
+		field.appendChild(shadow);
+		var options = getComputedStyle(shadow);
+		var coordinat_shadow_x = 0;
+		var shadow_x = +25;
+		var shadow_y = +28;
+		var sbros = true;
+		/*function chasing(){
+			coordinat_shadow_x = +options.left.replace("px","");
+			coordinat_shadow_y = +options.top.replace("px","");
+			if(sbros){
+				if(shadow_x>0 && map[shadow_y][shadow_x-1]==0){
+					shadow_x = shadow_x-1;
+					console.log('nalevo');
+					shadow.style.left =	coordinat_shadow_x - 25 +"px";
+					
+				}
+				coordinat_shadow_x = +options.left.replace("px","");
+				coordinat_shadow_y = +options.top.replace("px","");			
+				if(shadow_x<25 && map[shadow_y][shadow_x+1]==0){			
+					shadow_x++;
+					console.log('napravo');
+					shadow.style.left =	coordinat_shadow_x + 25 +"px";
+						
+				}
+				var sbros = false;
+			}
+			if(!sbros){
+				if(shadow_y>0){
+					if(map[shadow_y-1][shadow_x]==0){
+						shadow_y = shadow_y-1;
+						console.log('vverh');
+						shadow.style.top =	coordinat_shadow_y - 25 +"px";
+						console.log(shadow_x);
+						console.log(shadow_y);
+						console.log(map[shadow_y-1][shadow_x]);
+						console.log(shadow.style.top);
+						
+					
+					}
+					
+					
+
+				}			
+				coordinat_shadow_x = +options.left.replace("px","");
+				coordinat_shadow_y = +options.top.replace("px","");
+				if(shadow_y<28){
+
+					if(map[shadow_y+1][shadow_x]==0){			
+						shadow_y = shadow_y+1;
+						console.log('vniz');
+						shadow.style.top =	coordinat_shadow_y + 25 +"px";
+						console.log(shadow_x);
+						console.log(shadow_y);
+						console.log(shadow.style.top);
+					}
+					
+					
+						
+					
+				}
+
+				var sbros = true;
+			}
+		}*/
+		var commands = [];
+		function chasing(){
+			if (shadow_x>0){
+				if(map[shadow_y][shadow_x-1]==0){
+					commands.push('nalevo');
+				}
+			}
+			if (shadow_x<25){
+				if(map[shadow_y][shadow_x+1]==0){
+					commands.push('napravo');
+				}
+			}
+			if (shadow_y>0){
+				if(map[shadow_y-1][shadow_x]==0){
+					commands.push('vverh');
+				}
+			}
+			if (shadow_y<28){
+				if(map[shadow_y+1][shadow_x]==0){
+					commands.push('vniz');
+				}
+			}
+			var rand = commands[Math.floor(Math.random()*commands.length)];
+			var shagi = Math.floor(Math.random()*12+1);
+			coordinat_shadow_x = +options.left.replace("px","");
+			coordinat_shadow_y = +options.top.replace("px","");
+			for(i=0;i<shagi;i++){
+				if(rand=='nalevo'){
+					coordinat_shadow_x = +options.left.replace("px","");
+					if (shadow_x>0){
+						if(map[shadow_y][shadow_x-1]==0){
+							shadow_x = shadow_x-1;
+							shadow.style.left =	coordinat_shadow_x - 25 +"px";
+						}
+					}
+				}
+				if(rand=='napravo'){
+				
+					coordinat_shadow_x = +options.left.replace("px","");
+					if (shadow_x<25){
+						if(map[shadow_y][shadow_x+1]==0){
+							shadow_x = shadow_x+1;
+							shadow.style.left =	coordinat_shadow_x + 25 +"px";
+						}
+					}
+				}
+				if(rand=='vverh'){
+				
+					coordinat_shadow_y = +options.top.replace("px","");
+					if (shadow_y>0){
+						if(map[shadow_y-1][shadow_x]==0){
+							shadow_y = shadow_y-1;
+							shadow.style.top =	coordinat_shadow_y - 25 +"px";
+						}
+					}
+				
+				}
+				if(rand=='vniz'){
+					coordinat_shadow_y = +options.top.replace("px","");
+					if (shadow_y<28){
+						if(map[shadow_y+1][shadow_x]==0){
+							shadow_y = shadow_y+1;
+							shadow.style.top =	coordinat_shadow_y + 25 +"px";
+						}
+					}
+				}
+			}
+			/*console.log(rand);*/
+			commands=[];
+		}
+		setInterval(chasing,2000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+.field{
+	width: 650px;
+	height: 725px;
+	line-height: 0;
+	margin: auto;
+	margin-top: 25px;
+	background: pink;
+	position: relative;
+}
+.wall{
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	background: blue;
+}
+.empty{
+	width: 25px;
+	height: 25px;
+	display: inline-block;
+	background: black;
+	position: relative;
+}
+.ball{
+	width: 9px;
+	height: 9px;
+	background:white;
+	border-radius: 50%;
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	display: block;
+}
+
+.pacman{
+    width: 0; height: 0;
+    border-right: 12.5px solid transparent;
+    border-top: 12.5px solid #F4B915;
+    border-left: 12.5px solid #F4B915;
+    border-bottom: 12.5px solid #F4B915;
+    border-top-left-radius: 12.5px;
+    border-top-right-radius: 12.5px;
+    border-bottom-left-radius: 12.5px;
+    border-bottom-right-radius: 12.5px;
+    position: absolute;
+	top: 0px;
+	left: 0px;
+	transform:rotate(0deg);
+  }
+.shadow{
+  	width: 25px;
+  	height: 25px;
+  	background:pink;
+  	position: absolute;
+	top: 700px;
+	left: 625px;
+	border-radius: 8px;
+	transition: top 0s,left 0s;
+  }
