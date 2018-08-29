@@ -1,0 +1,9 @@
+ {
+ "rules": {
+    "quotes": [1, "double"]
+    "extends": "eslint:recommended"
+    "extends": "eslint:recommended"
+    "extends": "eslint:recommended"
+    "extends": "eslint:recommended"
+  }
+}
