@@ -3,9 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<link rel="stylesheet" href="style3.css">
+	<link rel="stylesheet" href="style6.css">
+	<script src ="shadow_red.js"></script>
 </head>
 <body>
+	<div class="death">You have died</div>
+	<div class="gameover">GAME OVER</div>
 	<script>
 		var field = document.createElement("div");
 		field.className = 'field';
@@ -68,19 +71,33 @@
 		var key=0;
 		var pacman_x=0;
 		var pacman_y=0;	
-		/*var imports=[];
-		for(i=0;i<balls.length;i++){
-			if(balls[i]!=1){
-				var imp = getComputedStyle(balls[i]);
-				imports.push(imp);
-			}
-			else{
-				imports.push(1);
-			}
-		}
-		console.log(getComputedStyle(ball));*/
 		var score=0;
+		var counter= document.createElement("div");
+		counter.className = 'counter';
+		counter.innerHTML = "SCORE: "+ 0;
+		document.body.appendChild(counter);
+		var health =document.createElement("div");
+		health.className = 'health';
+		document.body.appendChild(health);
+		var hearts =[];
+		for(i=0;i<3;i++){
+			var heart = document.createElement("div");
+			heart.className = 'heart';
+			health.appendChild(heart);
+			hearts.push(heart);
+		}
+		var death = document.querySelector('.death');
+		var life = 3;
 		function move(event){
+			death.style.display = "none";
+			if(life==0){
+				return;
+			}
+			if(score==5920){
+				alert("You are the champion");
+				location.reload();
+			}
+
 			if(event.keyCode=='38'){
 				if(key!=38){
 					pacman.style.transform = "rotate(270deg)";
@@ -93,8 +110,7 @@
 						if(balls[pacman_y*26+pacman_x].style.display == "block"){
 							balls[pacman_y*26+pacman_x].style.display = "none";
 							score=score+20;
-						}
-						
+						}	
 					}
 				}
 			}
@@ -107,7 +123,10 @@
 					if(map[pacman_y+1][pacman_x]==0){
 						pacman.style.top=coordinat_y + 25 +"px";
 						pacman_y = pacman_y + 1;
-						balls[pacman_y*26+pacman_x].style.display = "none";
+						if(balls[pacman_y*26+pacman_x].style.display == "block"){
+							balls[pacman_y*26+pacman_x].style.display = "none";
+							score=score+20;
+						}
 					}
 				}
 			}
@@ -120,8 +139,10 @@
 					if(map[pacman_y][pacman_x-1]==0){
 						pacman.style.left=coordinat_x - 25 +"px";
 						pacman_x = pacman_x - 1;
-						balls[pacman_y*26+pacman_x].style.display = "none";
-						
+						if(balls[pacman_y*26+pacman_x].style.display == "block"){
+							balls[pacman_y*26+pacman_x].style.display = "none";
+							score=score+20;
+						}	
 					}
 				}
 				if(coordinat_x==0 && pacman_y==13){
@@ -139,7 +160,10 @@
 					if(map[pacman_y][pacman_x+1]==0){
 						pacman.style.left=coordinat_x + 25 +"px";
 						pacman_x = pacman_x + 1;
-						balls[pacman_y*26+pacman_x].style.display = "none";
+						if(balls[pacman_y*26+pacman_x].style.display == "block"){
+							balls[pacman_y*26+pacman_x].style.display = "none";
+							score=score+20;
+						}
 					}
 				}
 				if(coordinat_x==625 && pacman_y==13){
@@ -147,15 +171,11 @@
 					pacman_x=0;
 					balls[pacman_y*26+pacman_x].style.display = "none";
 				}
-
 			}
 			key = event.keyCode;
-			/*console.log(score);
-			console.log(pacman_x);
-			console.log(pacman_y);*/
-			
-			console.log(score);
+			counter.innerHTML = "SCORE: "+ score;  		
 		}
+		console.log(score);
 		window.addEventListener('keydown',move,false);
 		var eating_flag = false;
 		function eating(){
@@ -172,140 +192,6 @@
 		var shadow = document.createElement("div");
 		shadow.className = 'shadow';
 		field.appendChild(shadow);
-		var options = getComputedStyle(shadow);
-		var coordinat_shadow_x = 0;
-		var shadow_x = +25;
-		var shadow_y = +28;
-		var sbros = true;
-		/*function chasing(){
-			coordinat_shadow_x = +options.left.replace("px","");
-			coordinat_shadow_y = +options.top.replace("px","");
-			if(sbros){
-				if(shadow_x>0 && map[shadow_y][shadow_x-1]==0){
-					shadow_x = shadow_x-1;
-					console.log('nalevo');
-					shadow.style.left =	coordinat_shadow_x - 25 +"px";
-					
-				}
-				coordinat_shadow_x = +options.left.replace("px","");
-				coordinat_shadow_y = +options.top.replace("px","");			
-				if(shadow_x<25 && map[shadow_y][shadow_x+1]==0){			
-					shadow_x++;
-					console.log('napravo');
-					shadow.style.left =	coordinat_shadow_x + 25 +"px";
-						
-				}
-				var sbros = false;
-			}
-			if(!sbros){
-				if(shadow_y>0){
-					if(map[shadow_y-1][shadow_x]==0){
-						shadow_y = shadow_y-1;
-						console.log('vverh');
-						shadow.style.top =	coordinat_shadow_y - 25 +"px";
-						console.log(shadow_x);
-						console.log(shadow_y);
-						console.log(map[shadow_y-1][shadow_x]);
-						console.log(shadow.style.top);
-						
-					
-					}
-					
-					
-
-				}			
-				coordinat_shadow_x = +options.left.replace("px","");
-				coordinat_shadow_y = +options.top.replace("px","");
-				if(shadow_y<28){
-
-					if(map[shadow_y+1][shadow_x]==0){			
-						shadow_y = shadow_y+1;
-						console.log('vniz');
-						shadow.style.top =	coordinat_shadow_y + 25 +"px";
-						console.log(shadow_x);
-						console.log(shadow_y);
-						console.log(shadow.style.top);
-					}
-					
-					
-						
-					
-				}
-
-				var sbros = true;
-			}
-		}*/
-		var commands = [];
-		function chasing(){
-			if (shadow_x>0){
-				if(map[shadow_y][shadow_x-1]==0){
-					commands.push('nalevo');
-				}
-			}
-			if (shadow_x<25){
-				if(map[shadow_y][shadow_x+1]==0){
-					commands.push('napravo');
-				}
-			}
-			if (shadow_y>0){
-				if(map[shadow_y-1][shadow_x]==0){
-					commands.push('vverh');
-				}
-			}
-			if (shadow_y<28){
-				if(map[shadow_y+1][shadow_x]==0){
-					commands.push('vniz');
-				}
-			}
-			var rand = commands[Math.floor(Math.random()*commands.length)];
-			var shagi = Math.floor(Math.random()*12+1);
-			coordinat_shadow_x = +options.left.replace("px","");
-			coordinat_shadow_y = +options.top.replace("px","");
-			for(i=0;i<shagi;i++){
-				if(rand=='nalevo'){
-					coordinat_shadow_x = +options.left.replace("px","");
-					if (shadow_x>0){
-						if(map[shadow_y][shadow_x-1]==0){
-							shadow_x = shadow_x-1;
-							shadow.style.left =	coordinat_shadow_x - 25 +"px";
-						}
-					}
-				}
-				if(rand=='napravo'){
-				
-					coordinat_shadow_x = +options.left.replace("px","");
-					if (shadow_x<25){
-						if(map[shadow_y][shadow_x+1]==0){
-							shadow_x = shadow_x+1;
-							shadow.style.left =	coordinat_shadow_x + 25 +"px";
-						}
-					}
-				}
-				if(rand=='vverh'){
-				
-					coordinat_shadow_y = +options.top.replace("px","");
-					if (shadow_y>0){
-						if(map[shadow_y-1][shadow_x]==0){
-							shadow_y = shadow_y-1;
-							shadow.style.top =	coordinat_shadow_y - 25 +"px";
-						}
-					}
-				
-				}
-				if(rand=='vniz'){
-					coordinat_shadow_y = +options.top.replace("px","");
-					if (shadow_y<28){
-						if(map[shadow_y+1][shadow_x]==0){
-							shadow_y = shadow_y+1;
-							shadow.style.top =	coordinat_shadow_y + 25 +"px";
-						}
-					}
-				}
-			}
-			/*console.log(rand);*/
-			commands=[];
-		}
-		setInterval(chasing,2000);
 	</script>
 </body>
 </html>
